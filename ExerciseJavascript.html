@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <script>
+
+        function PrintNumbers()
+        {
+            for(var i = 0; i < 100; i++)
+            {
+                var n = Number(i+1);
+                var str = "";
+                
+                if (AreMultiples(n, 3))
+                    str += "Fizz";
+                
+                if (AreMultiples(n, 5))
+                    str += "Buzz";
+                    
+                if (str == "")
+                    str = n;
+                
+                document.write("<p>" + str + "</p>");
+            }
+        }
+        
+        function AreMultiples(number1, number2)
+        {
+            return ((number1 % number2) == 0);
+        }
+
+    </script>
+</head>
+
+<body onload="PrintNumbers()">
+
+</body>
