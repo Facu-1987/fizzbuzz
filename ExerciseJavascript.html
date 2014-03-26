@@ -61,7 +61,8 @@
             if (typeof(Storage) == "undefined")
                 return;
             
-            localStorage.setItem("PrintsNumber", document.getElementById("np").value);
+            localStorage.setItem("StartValue", document.getElementById("sv").value);
+            localStorage.setItem("EndValue", document.getElementById("ev").value);
             localStorage["Arr"] = JSON.stringify(arrMultStr);
         }
         
@@ -70,8 +71,10 @@
             if (typeof(Storage) == "undefined")
                 return;
             
-            if (localStorage["PrintsNumber"] != null)
-                document.getElementById("np").value = Number(localStorage.getItem("PrintsNumber"));
+            if (localStorage["StartValue"] != null)
+                document.getElementById("sv").value = Number(localStorage.getItem("StartValue"));
+            if (localStorage["EndValue"] != null)
+                document.getElementById("ev").value = Number(localStorage.getItem("EndValue"));
             
             if (localStorage["Arr"] != null)
             {
@@ -115,20 +118,20 @@
             
             if (mult == "")
             {
-                alert("You've got to put a value in the field \"Multiplier\"");
+                alert("Tenés que poner un valor en el campo \"Multiplier\"");
                 return;
             }
             
             if (HasMultiplierInArray(mult))
             {
-                alert("The Multiplier value already exists");
+                alert("El valor Multiplier ya existe");
                 return;
             }
             
             var str = document.getElementById("str").value;
             if (str == "")
             {
-                alert("You've got to put something in the field \"String\"");
+                alert("Tenés que poner algo en el campo \"String\"");
                 return;
             }
             
@@ -151,12 +154,13 @@
         {
             WriteData();
             
-            var numberNp = document.getElementById("np");
+            var startValue = document.getElementById("sv").value;
+            var endValue = document.getElementById("ev").value;
             var divPrintings = document.getElementById("printings");
             
             divPrintings.innerHTML = "";
             
-            for(var i = 0; i < numberNp.value; i++)
+            for(var i = startValue-1; i < endValue; i++)
             {
                 var n = Number(i+1);
                 var str = "";
@@ -187,8 +191,9 @@
     <div>
         
         <br>
-        
-        Number of prints: <input id="np" type="number" value="100" min="1">
+
+        Start Value: <input id="sv" type="number" value="1" min="1">
+        End Value: <input id="ev" type="number" value="100" min="1">
         
         <br><br><br>
         
