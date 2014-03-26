@@ -1,25 +1,176 @@
 <!DOCTYPE html>
 
 <head>
-    <script>
-
+    
+    <style>
+    
+        div
+        {
+            border-style: solid;
+            border-width: 1px;
+        }
+        
+        table, th, td
+        {
+            width: 500px;
+            border-width: 1px;
+        }
+    
+    </style>
+    
+    <script type="text/javascript">
+        
+        var arrMultStr;
+        
+        function Start()
+        {
+            if (!ReadData())
+                arrMultStr = [[3, "Fizz"], [5, "Buzz"]];
+            
+            FillTable();
+        }
+        
+        function FillTable()
+        {
+            SortArray();
+            WriteData();
+            
+            var tbMultStr = document.getElementById("tbMultStr");
+            
+            for (var i = tbMultStr.rows.length-1; i > 0; i--)
+                tbMultStr.deleteRow(i);
+            
+            for (var i = 0; i < arrMultStr.length; i++)
+            {
+                var row = tbMultStr.insertRow(tbMultStr.rows.length);
+                
+                var mult = row.insertCell(0);
+                var str = row.insertCell(1);
+                var btn = row.insertCell(2);
+                
+                mult.innerHTML = arrMultStr[i][0];
+                str.innerHTML = arrMultStr[i][1];
+                
+                var btnRemove = "<button id=" + i + " onclick=\"RemoveRow(this.id)\">Remove</button>";
+                btn.innerHTML = btnRemove;
+            }
+        }
+        
+        function WriteData()
+        {
+            if (typeof(Storage) == "undefined")
+                return;
+            
+            localStorage.setItem("PrintsNumber", document.getElementById("np").value);
+            localStorage["Arr"] = JSON.stringify(arrMultStr);
+        }
+        
+        function ReadData()
+        {
+            if (typeof(Storage) == "undefined")
+                return;
+            
+            if (localStorage["PrintsNumber"] != null)
+                document.getElementById("np").value = Number(localStorage.getItem("PrintsNumber"));
+            
+            if (localStorage["Arr"] != null)
+            {
+                arrMultStr = JSON.parse(localStorage["Arr"]);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        function HasMultiplierInArray(value)
+        {
+            for (var i = 0; i < arrMultStr.length; i++)
+            {
+                if (arrMultStr[i][0] == value)
+                    return true;
+            }
+            
+            return false;
+        }
+        
+        function SortArray()
+        {
+            for (var i = 0; i < arrMultStr.length - 1; i++)
+            {
+                for (var j = i + 1; j < arrMultStr.length; j++)
+                {
+                    if (Number(arrMultStr[i][0]) > Number(arrMultStr[j][0]))
+                    {
+                        var temp = arrMultStr[i];
+                        arrMultStr[i] = arrMultStr[j];
+                        arrMultStr[j] = temp;
+                    }
+                }
+            }
+        }
+        
+        function AddRow()
+        {
+            var mult = document.getElementById("mult").value;
+            
+            if (mult == "")
+            {
+                alert("You've got to put a value in the field \"Multiplier\"");
+                return;
+            }
+            
+            if (HasMultiplierInArray(mult))
+            {
+                alert("The Multiplier value already exists");
+                return;
+            }
+            
+            var str = document.getElementById("str").value;
+            if (str == "")
+            {
+                alert("You've got to put something in the field \"String\"");
+                return;
+            }
+            
+            arrMultStr.push([mult, str]);
+            
+            FillTable();
+        }
+        
+        function RemoveRow(index)
+        {
+            if (index >= arrMultStr.length || index < 0)
+                return;
+            
+            arrMultStr.splice(index, 1);
+            
+            FillTable();
+        }
+        
         function PrintNumbers()
         {
-            for(var i = 0; i < 100; i++)
+            WriteData();
+            
+            var numberNp = document.getElementById("np");
+            var divPrintings = document.getElementById("printings");
+            
+            divPrintings.innerHTML = "";
+            
+            for(var i = 0; i < numberNp.value; i++)
             {
                 var n = Number(i+1);
                 var str = "";
                 
-                if (AreMultiples(n, 3))
-                    str += "Fizz";
-                
-                if (AreMultiples(n, 5))
-                    str += "Buzz";
-                    
+                for (j = 0; j < arrMultStr.length; j++)
+                {
+                    if (AreMultiples(n, arrMultStr[j][0]))
+                        str += arrMultStr[j][1];
+                }
+
                 if (str == "")
                     str = n;
                 
-                document.write("<p>" + str + "</p>");
+                divPrintings.innerHTML += "<p>" + str + "</p>";
             }
         }
         
@@ -31,6 +182,44 @@
     </script>
 </head>
 
-<body onload="PrintNumbers()">
+<body onload="Start()">
+    
+    <div>
+        
+        <br>
+        
+        Number of prints: <input id="np" type="number" value="100" min="1">
+        
+        <br><br><br>
+        
+        <table id="tbMultStr" border="1">
+        
+            <tr>
+            
+                <th>Multiplier Values</th>
+                <th>Strings</th>
+                <th>Remove Record</th>
+                
+            </tr>
+            
+        </table>
+        
+        <br>
+        
+        Multiplier: <input id="mult" type="number" min="1" value="1">   String: <input id="str" type="text">     <button onclick="AddRow()">Add Record</button>
+        
+        <br><br><br>
+    
+        <button onclick="PrintNumbers()">Do the printing</button>
+        
+        <br><br>
+    
+    </div>
+    
+    <br>
+    
+    <div id="printings">
+        
+    </div>
 
 </body>
