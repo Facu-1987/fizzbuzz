@@ -63,7 +63,8 @@
             
             localStorage.setItem("StartValue", document.getElementById("sv").value);
             localStorage.setItem("EndValue", document.getElementById("ev").value);
-            localStorage["Arr"] = JSON.stringify(arrMultStr);
+            //localStorage["Arr"] = JSON.stringify(arrMultStr);
+            localStorage.setItem("Arr", JSON.stringify(arrMultStr));
         }
         
         function ReadData()
@@ -78,7 +79,8 @@
             
             if (localStorage["Arr"] != null)
             {
-                arrMultStr = JSON.parse(localStorage["Arr"]);
+                //arrMultStr = JSON.parse(localStorage["Arr"]);
+                arrMultStr = JSON.parse(localStorage.getItem("Arr"));
                 return true;
             }
             
