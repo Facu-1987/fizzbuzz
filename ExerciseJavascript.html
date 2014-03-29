@@ -18,6 +18,13 @@
     
     </style>
     
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
+
+    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
+    
     <script type="text/javascript">
         
         var arrMultStr;
@@ -144,6 +151,18 @@
         
         function RemoveRow(index)
         {
+            describe("Index element", function() {
+                
+                it("to be less than the size of the array", function() {
+                    expect(index).toBeLessThan(arrMultStr.length);
+                });
+
+                it("to be grater than 0", function() {
+                    expect(index).toBeGreaterThan(0);
+                });
+                
+            });
+            
             if (index >= arrMultStr.length || index < 0)
                 return;
             
