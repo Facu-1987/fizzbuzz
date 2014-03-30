@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    
+    <style>
+    
+        div
+        {
+            border-style: solid;
+            border-width: 1px;
+        }
+        
+        table, th, td
+        {
+            width: 500px;
+            border-width: 1px;
+        }
+    
+    </style>
+    
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.0/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.0/jasmine.css">
+
+    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
+    <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
+    
+    <!-- include source files here... -->
+    <script type="text/javascript" src="src/ExerciseJavascript.js"></script>
+    
+</head>
+
+<body onload="Start()">
+    
+    <div>
+        
+        <br>
+
+        Start Value: <input id="sv" type="number" value="1" min="1">
+        End Value: <input id="ev" type="number" value="100" min="1">
+        
+        <br><br><br>
+        
+        <table id="tbMultStr" border="1">
+        
+            <tr>
+            
+                <th>Multiplier Values</th>
+                <th>Strings</th>
+                <th>Remove Record</th>
+                
+            </tr>
+            
+        </table>
+        
+        <br>
+        
+        Multiplier: <input id="mult" type="number" min="1" value="1">   String: <input id="str" type="text">     <button onclick="AddRow()">Add Record</button>
+        
+        <br><br><br>
+    
+        <button onclick="PrintNumbers()">Do the printing</button>
+        
+        <br><br>
+    
+    </div>
+    
+    <br>
+    
+    <div id="printings">
+        
+    </div>
+
+</body>
